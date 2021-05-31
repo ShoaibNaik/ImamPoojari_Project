@@ -125,7 +125,7 @@ class _RegisterState extends State<Register> {
                       ),
                       SizedBox(height: 40),
                       TextFormField(
-                        keyboardType: TextInputType.,
+                        keyboardType: TextInputType.name,
                         decoration: InputDecoration(
                           labelText: 'Last Name',
                           border: OutlineInputBorder(),
