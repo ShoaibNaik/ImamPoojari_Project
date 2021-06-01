@@ -1,4 +1,5 @@
 import 'package:final_major_project/LangDropDown.dart';
+import 'package:final_major_project/RegisterPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -198,7 +199,9 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: 60),
                       OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Register();
+                        },
                         child: Text(
                           "Verify OTP",
                           style: TextStyle(color: Colors.black,),

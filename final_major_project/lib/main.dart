@@ -1,5 +1,6 @@
 import 'package:final_major_project/LoginPage.dart';
 import 'package:final_major_project/RegisterPage.dart';
+import 'package:final_major_project/nav.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: "Roboto"
       ),
-      home: Register(),
+      home: navBar(),
     );
   }
 }

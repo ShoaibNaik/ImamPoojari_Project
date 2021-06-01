@@ -1,6 +1,7 @@
 import 'package:final_major_project/AreaDropDown.dart';
 import 'package:final_major_project/DatePicker.dart';
 import 'package:final_major_project/PostDropDown.dart';
+import 'package:final_major_project/nav.dart';
 import 'package:flutter_linear_datepicker/flutter_datepicker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +115,9 @@ class _RegisterState extends State<Register> {
                     borderRadius:
                     BorderRadius.only(topLeft: Radius.circular(35))),
                 child: Center(
-                  child: Column(
+                  child: ListView(
+                    shrinkWrap: true,
+                    reverse: true,
                     children: [
                       SizedBox(height: 40),
                       TextFormField(
@@ -204,7 +207,11 @@ class _RegisterState extends State<Register> {
                       ),
                       SizedBox(height: 60),
                       OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            navBar();
+                          });
+                        },
                         child: Text(
                           "Register",
                           style: TextStyle(color: Colors.black,),
