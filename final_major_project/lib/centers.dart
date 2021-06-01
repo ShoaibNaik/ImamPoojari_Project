@@ -60,7 +60,7 @@ class _centersListState extends State<centersList> {
         break;
 
       case 1:
-        yOffset = 270;
+        yOffset = 350;
         _yOffset = windowHeight;
         xOffset = 0;
         break;
@@ -216,7 +216,7 @@ class _centersListState extends State<centersList> {
         " " +
         item['name']['last'];
     var email = item['email'];
-    var profileUrl = item['picture']['large'];
+    var profileUrl = item['picture']['medium'];
     return InkWell(
       onTap: () {
         setState(() {
@@ -242,7 +242,7 @@ class _centersListState extends State<centersList> {
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage(""))),
+                          image: NetworkImage(profileUrl))),
                 ),
                 SizedBox(
                   width: 20,

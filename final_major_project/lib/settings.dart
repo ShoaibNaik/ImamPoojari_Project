@@ -26,17 +26,29 @@ class _SettingListState extends State<SettingList> {
   Widget getListView(){
     var List = ListView(
       children: [
+        SizedBox(height: 15),
         ListTile(
-          leading: Icon(Icons.account_circle_sharp),
-          title: Text('Profile'),
+          leading: Image.asset("assets/images/profile.png"),
+          title: Text('Profile',
+          style: TextStyle(fontSize: 20)),
         ),
+        SizedBox(height: 15),
         ListTile(
-          leading: Icon(Icons.language),
-          title: Text('Language'),
+          leading: Image.asset("assets/images/language.png"),
+          title: Text('Language',
+            style: TextStyle(fontSize: 20)),
         ),
+        SizedBox(height: 15),
         ListTile(
-          leading: Icon(Icons.notifications_active_outlined),
-          title: Text('Notifications'),
+          leading: Image.asset("assets/images/sign_out.png"),
+          title: Text('Sign out',
+            style: TextStyle(fontSize: 20)),
+        ),
+        SizedBox(height: 15),
+        ListTile(
+          leading: Image.asset("assets/images/info.png"),
+          title: Text('Legal & About',
+            style: TextStyle(fontSize: 20)),
         ),
       ],
     );

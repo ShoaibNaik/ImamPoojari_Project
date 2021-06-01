@@ -114,7 +114,7 @@ class _RegisterState extends State<Register> {
                   shrinkWrap: true,
                   reverse: true,
                   children: [
-                    SizedBox(height: 40),
+                    SizedBox(height: 10),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'First Name',
@@ -130,6 +130,13 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     SizedBox(height: 40),
+                    TextFormField(
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        labelText: 'Date of Birth',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
                     // InkWell(
                     //   child: DatePicker(),
                     // ),

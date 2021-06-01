@@ -60,7 +60,7 @@ class _visitorsListState extends State<VisitorsList> {
         break;
 
       case 1:
-        yOffset = 270;
+        yOffset = 350;
         _yOffset = windowHeight;
         xOffset = 0;
         break;
@@ -93,6 +93,8 @@ class _visitorsListState extends State<VisitorsList> {
                   borderRadius:
                   BorderRadius.only(topLeft: Radius.circular(35))),
               child: ListView(
+                shrinkWrap: true,
+                reverse: true,
                 padding: EdgeInsets.all(10),
                 children: [
                   Row(
@@ -182,7 +184,7 @@ class _visitorsListState extends State<VisitorsList> {
                       ],
                     ),
                   ),
-                ],
+                ].reversed.toList(),
               ),
             ),
           ),
