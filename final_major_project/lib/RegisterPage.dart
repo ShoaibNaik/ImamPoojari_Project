@@ -99,67 +99,65 @@ class _RegisterState extends State<Register> {
                     ])),
           ),
           Container(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _pageState = 2;
-                });
-              },
-              child: AnimatedContainer(
-                padding: EdgeInsets.all(32),
-                curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(milliseconds: 1000),
-                transform: Matrix4.translationValues(0, _registerYoffset, 1),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                    BorderRadius.only(topLeft: Radius.circular(35))),
-                child: Center(
-                  child: ListView(
-                    shrinkWrap: true,
-                    reverse: true,
-                    children: [
-                      SizedBox(height: 40),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'First Name',
-                          border: OutlineInputBorder(),
-                        ),
+            child: AnimatedContainer(
+              padding: EdgeInsets.all(32),
+              curve: Curves.fastLinearToSlowEaseIn,
+              duration: Duration(milliseconds: 1000),
+              transform: Matrix4.translationValues(0, _registerYoffset, 1),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                  BorderRadius.only(topLeft: Radius.circular(35))),
+              child: Container(
+                margin: EdgeInsets.only(top: 50),
+                child: ListView(
+                  shrinkWrap: true,
+                  reverse: true,
+                  children: [
+                    SizedBox(height: 40),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'First Name',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 40),
-                      TextFormField(
-                        keyboardType: TextInputType.name,
-                        decoration: InputDecoration(
-                          labelText: 'Last Name',
-                          border: OutlineInputBorder(),
-                        ),
+                    ),
+                    SizedBox(height: 40),
+                    TextFormField(
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        labelText: 'Last Name',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 40),
-                      // InkWell(
-                      //   child: DatePicker(),
-                      // ),
-                      SizedBox(height: 40),
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: 'Email Address',
-                          border: OutlineInputBorder(),
-                        ),
+                    ),
+                    SizedBox(height: 40),
+                    // InkWell(
+                    //   child: DatePicker(),
+                    // ),
+                    SizedBox(height: 40),
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: 'Email Address',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 40),
-                      InkWell(
-                        child: PostList(),
+                    ),
+                    SizedBox(height: 40),
+                    InkWell(
+                      child: PostList(),
+                    ),
+                    SizedBox(height: 40),
+                    OutlinedButton(
+                      onPressed: () {
+                        setState(() {
+                          _pageState = 2;
+                        });
+                      },
+                      child: Text(
+                        "Next",
+                        style: TextStyle(color: Colors.black,),
                       ),
-                      SizedBox(height: 40),
-                      OutlinedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Next",
-                          style: TextStyle(color: Colors.black,),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ].reversed.toList(),
                 ),
               ),
             ),

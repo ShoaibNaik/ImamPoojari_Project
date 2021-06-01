@@ -32,7 +32,7 @@ class FeedBack extends StatelessWidget {
             SizedBox(height: 20.0),
             Container(
               height: 50,
-              width: 200,
+              width: 250,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.green),
