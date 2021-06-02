@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 class centersList extends StatefulWidget {
@@ -20,22 +21,50 @@ class _centersListState extends State<centersList> {
 
   List users = [];
   bool isLoading = false;
+  List centers = [];
+
+  var address;
+  var Name;
+  var type;
+  var area;
+  var indx;
 
   fetchUser() async {
     setState(() {
       isLoading = true;
     });
-    var url = "https://randomuser.me/api/?results=50";
+    var url = "http://www.imampoojari.educationhost.cloud/centers.php/";
     var response = await http.get(Uri.parse(url));
     // print(response.body);
     if (response.statusCode == 200) {
-      var items = json.decode(response.body)['results'];
+      var items = json.decode(response.body);
       setState(() {
         users = items;
         isLoading = false;
       });
     } else {
       users = [];
+      isLoading = false;
+    }
+  }
+
+  fetchdata() async {
+    setState(() {
+      isLoading = true;
+    });
+    var url = "http://www.imampoojari.educationhost.cloud/centerData.php/";
+    var response = await http.post(Uri.parse(url),body: {
+      "id" : indx,
+    });
+    // print(response.body);
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      setState(() {
+        centers = items;
+        isLoading = false;
+      });
+    } else {
+      centers = [];
       isLoading = false;
     }
   }
@@ -92,108 +121,14 @@ class _centersListState extends State<centersList> {
                   color: Colors.green,
                   borderRadius:
                   BorderRadius.only(topLeft: Radius.circular(35))),
-              child: ListView(
-                padding: EdgeInsets.all(10),
-                children: [
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            _pageState = 0;
-                          });
-                        },
-                        child: Icon(
-                          Icons.arrow_back_ios_rounded,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 110,
-                      ),
-                      Text(
-                        'Kainat',
-                        style: TextStyle(color: Colors.white, fontSize: 28),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Location:',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        'Tanwar Nagar',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Address:',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Expanded(
-                        child: Text(
-                          '07 Evergreen Park, Main Gate, opp. Tanwar Nagar, Kausa, Mumbra, Thane, Maharashtra 400612',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
-                    padding: EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Visiting',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 18,
-                          color: Colors.black,
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              child: getcon(),
             ),
           ),
         ],
       ),
     );
   }
+
 
   Widget getBody() {
     if (users.contains(null) || users.length < 0 || isLoading) {
@@ -209,14 +144,129 @@ class _centersListState extends State<centersList> {
         });
   }
 
+  Widget getcon() {
+
+    return ListView.builder(
+        itemCount: centers.length,
+        itemBuilder: (context, index) {
+          return getC(centers[index]);
+        });
+  }
+
+  Widget getC(item){
+    Name = item['name'];
+    type = item['type'];
+    area = item['area'];
+    address = item['address'];
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    _pageState = 0;
+                  });
+                },
+                child: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  size: 20,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                width: 110,
+              ),
+              Text(
+                type,
+                style: TextStyle(color: Colors.white, fontSize: 28),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          Row(
+            children: [
+              Text(
+                'Location:',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                area,
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          Row(
+            children: [
+              Text(
+                'Address:',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Expanded(
+                child: Text(
+                  address,
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            height: 50,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white),
+            padding: EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Visiting',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18,
+                  color: Colors.black,
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
   Widget getCard(item) {
-    var fullName = item['name']['title'] +
-        " " +
-        item['name']['first'] +
-        " " +
-        item['name']['last'];
-    var email = item['email'];
-    var profileUrl = item['picture']['medium'];
+    Name = item['name'];
+    type = item['type'];
+    area = item['area'];
+    address = item['address'];
+
+
     return InkWell(
       onTap: () {
         setState(() {
@@ -224,6 +274,9 @@ class _centersListState extends State<centersList> {
             _pageState = 0;
           } else {
             _pageState = 1;
+            indx = item['id'];
+            print(indx);
+            fetchdata();
           }
         });
       },
@@ -242,7 +295,7 @@ class _centersListState extends State<centersList> {
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(profileUrl))),
+                          image: AssetImage("assets/images/medical.png"),),),
                 ),
                 SizedBox(
                   width: 20,
@@ -253,14 +306,14 @@ class _centersListState extends State<centersList> {
                     SizedBox(
                         width: MediaQuery.of(context).size.width - 140,
                         child: Text(
-                          fullName,
+                          Name,
                           style: TextStyle(fontSize: 17),
                         )),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
-                      email.toString(),
+                      type,
                       style: TextStyle(color: Colors.grey),
                     )
                   ],
@@ -271,6 +324,15 @@ class _centersListState extends State<centersList> {
         ),
       ),
     );
+  }
+  Image img(t){
+    if(t == 1){
+      AssetImage("assets/images/medical.png");
+    }else if(t == 2){
+      AssetImage("assets/images/hospital.png");
+    }else if(t == 3){
+      AssetImage("assets/images/pharmacy.png");
+    }
   }
 }
 
