@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:final_major_project/LangDropDown.dart';
 import 'package:final_major_project/RegisterPage.dart';
+import 'package:final_major_project/nav.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+
 
 class Login extends StatefulWidget {
   const Login({Key key}) : super(key: key);
@@ -18,6 +24,45 @@ class _LoginState extends State<Login> {
 
   double windowWidth = 0;
   double windowHeight = 0;
+
+  TextEditingController user = TextEditingController();
+  TextEditingController otp = TextEditingController();
+
+  var data;
+  var need;
+
+  Future login() async{
+    var url = "http://imampoojari.educationhost.cloud/login.php";
+    var response = await http.post(Uri.parse(url),
+        body:{
+        "userId" : user.text,
+        });
+
+    data = jsonDecode(response.body);
+
+    if(data == "done"){
+      print("Logged In");
+    }else if(data == "error"){
+      print("error");
+    }
+  }
+
+  Future OTP() async{
+    var url = "http://imampoojari.educationhost.cloud/otp.php";
+    var response = await http.post(Uri.parse(url),
+        body:{
+          "userId" : user.text,
+          "otp" : otp.text,
+        });
+
+    data = jsonDecode(response.body);
+
+    if(data == "user done"){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => navBar()));
+    }else if(data == "user error"){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Register()));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +106,7 @@ class _LoginState extends State<Login> {
                     margin: const EdgeInsets.only(top: 240),
                     child: Text(
                       "Choose Your Language",
-                      style: TextStyle(fontSize: 24,color: Colors.black),
+                      style: TextStyle(fontSize: 24, color: Colors.black),
                     ),
                   ),
                   Container(
@@ -103,112 +148,155 @@ class _LoginState extends State<Login> {
                 ])),
           ),
           Container(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _pageState = 2;
-                });
-              },
-              child: AnimatedContainer(
-                margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.all(20),
-                curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(milliseconds: 500),
-                transform:
-                    Matrix4.translationValues(_loginXoffset, _loginYOffset, 1),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(35))
-                ),
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Icon(Icons.chevron_left),
-                          SizedBox(width: 110),
-                          Text(
-                            "LOGIN",
-                            style: TextStyle(fontSize: 32, color: Colors.black),
-                          ),
-                        ],
+            child: AnimatedContainer(
+              margin: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.all(20),
+              curve: Curves.fastLinearToSlowEaseIn,
+              duration: Duration(milliseconds: 500),
+              transform:
+                  Matrix4.translationValues(_loginXoffset, _loginYOffset, 1),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.only(topLeft: Radius.circular(35))),
+              child: Center(
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: (){
+                            setState(() {
+                              _pageState = 0;
+                            });
+                          },
+                            child: Icon(Icons.arrow_back_ios_outlined, size: 22,)),
+                        SizedBox(width: 110),
+                        Text(
+                          "LOGIN",
+                          style: TextStyle(fontSize: 32, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 40),
+                    TextFormField(
+                      controller: user,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        labelText: 'Enter User ID',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 40),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Enter Registered Mobile No',
-                          errorText: 'Number must be 10 digits',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(
-                            Icons.error,
-                          ),
+                    ),
+                    SizedBox(height: 40),
+                    InkWell(
+                      onTap: (){
+                        setState(() {
+                          login();
+                          _pageState = 2;
+                        });
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFF35BB9B),
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Send OTP',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 60),
-                      OutlinedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Get OTP",
-                          style: TextStyle(color: Colors.black,),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
           Container(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _pageState = 1;
-                });
-              },
-              child: AnimatedContainer(
-                padding: EdgeInsets.all(32),
-                curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(milliseconds: 1000),
-                transform: Matrix4.translationValues(0, _registerYoffset, 1),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(35))),
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Text(
-                        "OTP sent",
-                        style: TextStyle(fontSize: 28, color: Colors.black),
+            child: AnimatedContainer(
+              padding: EdgeInsets.all(32),
+              curve: Curves.fastLinearToSlowEaseIn,
+              duration: Duration(milliseconds: 1000),
+              transform: Matrix4.translationValues(0, _registerYoffset, 1),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.only(topLeft: Radius.circular(35))),
+              child: Center(
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: (){
+                            setState(() {
+                              _pageState =1;
+                            });
+                          },
+                            child: Icon(Icons.arrow_back_ios_rounded, size: 22,)),
+                        SizedBox(width: 90,),
+                        Text(
+                          "OTP sent",
+                          style: TextStyle(fontSize: 28, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 60),
+                    TextFormField(
+                      maxLength: 6,
+                      controller: otp,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Enter OTP',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 40),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Enter OTP',
-                          errorText: 'Enter valid OTP',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(
-                            Icons.error,
-                          ),
+                    ),
+                    SizedBox(height: 40),
+                    InkWell(
+                      onTap: (){
+                        setState(() {
+                          OTP();
+                        });
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFF35BB9B),
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Verify OTP',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 60),
-                      OutlinedButton(
-                        onPressed: () {
-                          Register();
-                        },
-                        child: Text(
-                          "Verify OTP",
-                          style: TextStyle(color: Colors.black,),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

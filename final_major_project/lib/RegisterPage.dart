@@ -1,10 +1,7 @@
-import 'package:final_major_project/AreaDropDown.dart';
-import 'package:final_major_project/DatePicker.dart';
-import 'package:final_major_project/PostDropDown.dart';
 import 'package:final_major_project/nav.dart';
-import 'package:flutter_linear_datepicker/flutter_datepicker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:dropdown_below/dropdown_below.dart';
 
 class Register extends StatefulWidget {
   const Register({Key key}) : super(key: key);
@@ -22,6 +19,34 @@ class _RegisterState extends State<Register> {
   double windowWidth = 0;
   double windowHeight = 0;
 
+  List _area = [
+    {'no': 1, 'keyword': 'Amrut Nagar'},
+    {'no': 2, 'keyword': 'Kausa'},
+    {'no': 3, 'keyword': 'Tanwar Nagar'},
+    {'no': 4, 'keyword': 'Shimla Park'},
+    {'no': 5, 'keyword': 'Devripada'}
+  ];
+
+  List _postList = [
+    {'no': 1, 'keyword': 'Imam'},
+    {'no': 2, 'keyword': 'Maulana'},
+    {'no': 3, 'keyword': 'Poojari'},
+    {'no': 4, 'keyword': 'Pandit'},
+  ];
+
+  List<DropdownMenuItem> _dropdownLangItems;
+  var _selectedArea;
+
+  List<DropdownMenuItem> _dropdownPostItems;
+  var _selectedPost;
+
+  @override
+  void initState() {
+    _dropdownLangItems = buildDropdownLangItems(_area);
+    _dropdownPostItems = buildDropdownPostItems(_postList);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     windowHeight = MediaQuery.of(context).size.height;
@@ -36,7 +61,7 @@ class _RegisterState extends State<Register> {
         break;
       case 1:
         _loginYOffset = 270;
-        _registerYoffset = 210;
+        _registerYoffset = 220;
         _loginXoffset = 0;
 
         break;
@@ -56,47 +81,47 @@ class _RegisterState extends State<Register> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 32),
-                        margin: const EdgeInsets.only(top: 100),
-                        child: Center(
-                          child: Text(
-                            "Register",
-                            style: TextStyle(
-                              fontSize: 40,
-                            ),
-                          ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 32),
+                    margin: const EdgeInsets.only(top: 100),
+                    child: Center(
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                          fontSize: 40,
                         ),
                       ),
-                      Container(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (_pageState != 0) {
-                                _pageState = 0;
-                              } else {
-                                _pageState = 1;
-                              }
-                            });
-                          },
+                    ),
+                  ),
+                  Container(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (_pageState != 0) {
+                            _pageState = 0;
+                          } else {
+                            _pageState = 1;
+                          }
+                        });
+                      },
+                      child: Center(
+                        child: Container(
+                          margin: EdgeInsets.all(32),
+                          padding: EdgeInsets.all(20),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Color(0xFF35bb9b),
+                              borderRadius: BorderRadius.circular(50)),
                           child: Center(
-                            child: Container(
-                              margin: EdgeInsets.all(32),
-                              padding: EdgeInsets.all(20),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: Color(0xFF35bb9b),
-                                  borderRadius: BorderRadius.circular(50)),
-                              child: Center(
-                                  child: Text(
-                                    "Register",
-                                    style: TextStyle(color: Colors.black, fontSize: 23),
-                                  )),
-                            ),
-                          ),
+                              child: Text(
+                            "Register",
+                            style: TextStyle(color: Colors.black, fontSize: 23),
+                          )),
                         ),
                       ),
-                    ])),
+                    ),
+                  ),
+                ])),
           ),
           Container(
             child: AnimatedContainer(
@@ -107,14 +132,13 @@ class _RegisterState extends State<Register> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius:
-                  BorderRadius.only(topLeft: Radius.circular(35))),
+                      BorderRadius.only(topLeft: Radius.circular(35))),
               child: Container(
-                margin: EdgeInsets.only(top: 50),
+                margin: EdgeInsets.only(top: 15),
                 child: ListView(
                   shrinkWrap: true,
                   reverse: true,
                   children: [
-                    SizedBox(height: 10),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'First Name',
@@ -150,18 +174,37 @@ class _RegisterState extends State<Register> {
                     ),
                     SizedBox(height: 40),
                     InkWell(
-                      child: PostList(),
+                      child: Post(),
                     ),
                     SizedBox(height: 40),
-                    OutlinedButton(
-                      onPressed: () {
+                    InkWell(
+                      onTap: (){
                         setState(() {
                           _pageState = 2;
                         });
                       },
-                      child: Text(
-                        "Next",
-                        style: TextStyle(color: Colors.black,),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xFF35BB9B),
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Next',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ].reversed.toList(),
@@ -169,61 +212,75 @@ class _RegisterState extends State<Register> {
               ),
             ),
           ),
-
           Container(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _pageState = 1;
-                });
-              },
-              child: AnimatedContainer(
-                margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.all(20),
-                curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(milliseconds: 500),
-                transform:
-                Matrix4.translationValues(0, _loginYOffset, 1),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                    BorderRadius.only(topLeft: Radius.circular(35))
-                ),
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 40),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Holy Place Name',
-                          border: OutlineInputBorder(),
-                        ),
+            child: AnimatedContainer(
+              margin: EdgeInsets.only(top: 0),
+              padding: EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10),
+              curve: Curves.fastLinearToSlowEaseIn,
+              duration: Duration(milliseconds: 500),
+              transform: Matrix4.translationValues(0, _loginYOffset, 1),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.only(topLeft: Radius.circular(35))),
+              child: Center(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        InkWell(
+                            onTap: (){
+                              setState(() {
+                                _pageState = 1;
+                              });
+                            },
+                            child: Icon(Icons.arrow_back_ios_rounded, size: 22,))
+                      ],
+                    ),
+                    SizedBox(height: 40,),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Holy Place Name',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 40),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Holy Place Address',
-                          border: OutlineInputBorder(),
-                        ),
+                    ),
+                    SizedBox(height: 40),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Holy Place Address',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 40),
-                      InkWell(
-                        child: Area(),
+                    ),
+                    SizedBox(height: 40),
+                    InkWell(
+                      child: AreaList(),
+                    ),
+                    SizedBox(height: 60),
+                    Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xFF35BB9B),
                       ),
-                      SizedBox(height: 60),
-                      OutlinedButton(
-                        onPressed: () {
-                          setState(() {
-                            navBar();
-                          });
-                        },
-                        child: Text(
-                          "Register",
-                          style: TextStyle(color: Colors.black,),
-                        ),
+                      padding: EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Register',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -232,5 +289,82 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-}
 
+  List<DropdownMenuItem> buildDropdownLangItems(List _area) {
+    List<DropdownMenuItem> items = List();
+    for (var i in _area) {
+      items.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i['keyword']),
+        ),
+      );
+    }
+    return items;
+  }
+
+  List<DropdownMenuItem> buildDropdownPostItems(List _postList) {
+    List<DropdownMenuItem> items = List();
+    for (var i in _postList) {
+      items.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i['keyword']),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeDropdownLang(selectedLang) {
+    print(selectedLang);
+    setState(() {
+      _selectedArea = selectedLang;
+    });
+  }
+
+  Widget AreaList() {
+    return Container(
+      child: DropdownBelow(
+        itemWidth: 350,
+        itemTextstyle: TextStyle(
+            fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+        boxTextstyle: TextStyle(
+            fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+        boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
+        boxWidth: 400,
+        boxHeight: 60,
+        //  hint: Text('choose item'),
+        value: _selectedArea,
+        items: _dropdownLangItems,
+        onChanged: onChangeDropdownLang,
+      ),
+    );
+  }
+
+  onChangeDropdownPosts(selectedPost) {
+    print(selectedPost);
+    setState(() {
+      _selectedPost = selectedPost;
+    });
+  }
+
+  Widget Post() {
+    return Container(
+      child: DropdownBelow(
+        itemWidth: 350,
+        itemTextstyle: TextStyle(
+            fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+        boxTextstyle: TextStyle(
+            fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+        boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
+        boxWidth: 400,
+        boxHeight: 60,
+        //  hint: Text('choose item'),
+        value: _selectedPost,
+        items: _dropdownPostItems,
+        onChanged: onChangeDropdownPosts,
+      ),
+    );
+  }
+}

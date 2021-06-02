@@ -18,7 +18,7 @@ class _AreaState extends State<Area> {
     {'no': 5, 'keyword': 'Poojari'}
   ];
   List<DropdownMenuItem> _dropdownLangItems;
-  var _selectedLang;
+  var _selectedArea;
 
   @override
   void initState() {
@@ -49,8 +49,7 @@ class _AreaState extends State<Area> {
   onChangeDropdownLang(selectedLang) {
     print(selectedLang);
     setState(() {
-      _selectedLang = selectedLang;
-      lang = "English";
+      _selectedArea = selectedLang;
     });
   }
 
@@ -67,7 +66,7 @@ class _AreaState extends State<Area> {
         boxWidth: 400,
         boxHeight: 60,
         //  hint: Text('choose item'),
-        value: _selectedLang,
+        value: _selectedArea,
         items: _dropdownLangItems,
         onChanged: onChangeDropdownLang,
       ),

@@ -50,7 +50,6 @@ class _PostListState extends State<PostList> {
     print(selectedPost);
     setState(() {
       _selectedPost = selectedPost;
-      lang = "English";
     });
   }
 
