@@ -101,22 +101,22 @@ class _LoginState extends State<Login> {
                       padding: EdgeInsets.symmetric(horizontal: 32),
                       margin: const EdgeInsets.only(top: 100),
                       child: Image.asset("assets/images/logoBlack.png")),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    margin: const EdgeInsets.only(top: 240),
-                    child: Text(
-                      "Choose Your Language",
-                      style: TextStyle(fontSize: 24, color: Colors.black),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 150),
-                    child: Center(
-                      child: InkWell(
-                        child: LangList(),
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   padding: EdgeInsets.all(10),
+                  //   margin: const EdgeInsets.only(top: 240),
+                  //   child: Text(
+                  //     "Choose Your Language",
+                  //     style: TextStyle(fontSize: 24, color: Colors.black),
+                  //   ),
+                  // ),
+                  // Container(
+                  //   margin: const EdgeInsets.only(bottom: 150),
+                  //   child: Center(
+                  //     child: InkWell(
+                  //       child: LangList(),
+                  //     ),
+                  //   ),
+                  // ),
                   Container(
                     child: GestureDetector(
                       onTap: () {
