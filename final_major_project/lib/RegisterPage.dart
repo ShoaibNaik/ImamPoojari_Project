@@ -2,6 +2,9 @@ import 'package:final_major_project/nav.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_below/dropdown_below.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class Register extends StatefulWidget {
   const Register({Key key}) : super(key: key);
@@ -18,6 +21,38 @@ class _RegisterState extends State<Register> {
 
   double windowWidth = 0;
   double windowHeight = 0;
+
+  TextEditingController name = TextEditingController();
+  TextEditingController place = TextEditingController();
+  TextEditingController fName = TextEditingController();
+  TextEditingController lName = TextEditingController();
+  TextEditingController dob = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController userId = TextEditingController();
+
+  Future reg() async{
+    var url ="http://imampoojari.educationhost.cloud/userReg.php";
+    var response = await http.post(Uri.parse(url),body:{
+      "userId" : userId.text,
+      "firstName" : fName.text,
+      "lastName" : lName.text,
+      "email" : email.text,
+      "dob" : dob.text,
+      "profession" : _selectedPost,
+      "place" : name.text,
+      "address" : place.text,
+      "area" : _selectedArea
+    });
+    var data = jsonDecode(response.body);
+    if(data == 200){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => navBar()));
+    }else{
+      print("error");
+    }
+
+  }
+
+  List area = ["Kaif", "Bhalu"];
 
   List _area = [
     {'no': 1, 'keyword': 'Amrut Nagar'},
@@ -68,7 +103,7 @@ class _RegisterState extends State<Register> {
       case 2:
         _loginYOffset = 240;
         _registerYoffset = 210;
-        _loginXoffset = 20;
+        _loginXoffset = 0;
     }
 
     return Scaffold(
@@ -140,6 +175,7 @@ class _RegisterState extends State<Register> {
                   reverse: true,
                   children: [
                     TextFormField(
+                      controller: fName,
                       decoration: InputDecoration(
                         labelText: 'First Name',
                         border: OutlineInputBorder(),
@@ -147,6 +183,7 @@ class _RegisterState extends State<Register> {
                     ),
                     SizedBox(height: 40),
                     TextFormField(
+                      controller: lName,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                         labelText: 'Last Name',
@@ -155,6 +192,7 @@ class _RegisterState extends State<Register> {
                     ),
                     SizedBox(height: 40),
                     TextFormField(
+                      controller: dob,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                         labelText: 'Date of Birth',
@@ -166,6 +204,7 @@ class _RegisterState extends State<Register> {
                     // ),
                     SizedBox(height: 40),
                     TextFormField(
+                      controller: email,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         labelText: 'Email Address',
@@ -238,8 +277,16 @@ class _RegisterState extends State<Register> {
                             child: Icon(Icons.arrow_back_ios_rounded, size: 22,))
                       ],
                     ),
+                    TextFormField(
+                      controller: userId,
+                      decoration: InputDecoration(
+                        labelText: 'userId',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
                     SizedBox(height: 40,),
                     TextFormField(
+                      controller: name,
                       decoration: InputDecoration(
                         labelText: 'Holy Place Name',
                         border: OutlineInputBorder(),
@@ -247,6 +294,7 @@ class _RegisterState extends State<Register> {
                     ),
                     SizedBox(height: 40),
                     TextFormField(
+                      controller: place,
                       decoration: InputDecoration(
                         labelText: 'Holy Place Address',
                         border: OutlineInputBorder(),
@@ -257,27 +305,34 @@ class _RegisterState extends State<Register> {
                       child: AreaList(),
                     ),
                     SizedBox(height: 60),
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xFF35BB9B),
-                      ),
-                      padding: EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Register',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
+                    InkWell(
+                      onTap: (){
+                        setState(() {
+                          reg();
+                        });
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xFF35BB9B),
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Register',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                        ],
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
