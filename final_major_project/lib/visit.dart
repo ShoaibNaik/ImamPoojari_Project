@@ -20,16 +20,17 @@ class _visitorsListState extends State<VisitorsList> {
 
   List users = [];
   bool isLoading = false;
+  var indx;
 
   fetchUser() async {
     setState(() {
       isLoading = true;
     });
-    var url = "https://randomuser.me/api/?results=50";
+    var url = "http://www.imampoojari.educationhost.cloud/visitDisp.php/";
     var response = await http.get(Uri.parse(url));
     // print(response.body);
     if (response.statusCode == 200) {
-      var items = json.decode(response.body)['results'];
+      var items = json.decode(response.body);
       setState(() {
         users = items;
         isLoading = false;
@@ -206,67 +207,184 @@ class _visitorsListState extends State<VisitorsList> {
   }
 
   Widget getCard(item) {
-    var fullName = item['name']['title'] +
-        " " +
-        item['name']['first'] +
-        " " +
-        item['name']['last'];
-    var email = item['email'];
-    var profileUrl = item['picture']['large'];
-    return InkWell(
-      onTap: () {
-        setState(() {
-          if (_pageState != 0) {
-            _pageState = 0;
-          } else {
-            _pageState = 1;
-          }
-        });
-      },
-      child: Card(
-        elevation: 1.5,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ListTile(
-            title: Row(
-              children: <Widget>[
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
+    var Name = item['name'];
+    var type = item['type'];
+    var area = item['area'];
+    var address = item['address'];
+
+    if(type == "Chemist"){
+      return InkWell(
+        onTap: () {
+          setState(() {
+            if (_pageState != 0) {
+              _pageState = 0;
+            } else {
+              _pageState = 1;
+              //indx = item['id'];
+            }
+          });
+        },
+        child: Card(
+          elevation: 1.5,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ListTile(
+              title: Row(
+                children: <Widget>[
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(""))),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width - 140,
-                        child: Text(
-                          fullName,
-                          style: TextStyle(fontSize: 17),
-                        )),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      email.toString(),
-                      style: TextStyle(color: Colors.grey),
-                    )
-                  ],
-                )
-              ],
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/images/medical.png"),),),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width - 140,
+                          child: Text(
+                            Name,
+                            style: TextStyle(fontSize: 17),
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        type,
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+
+    }else if(type == "Hospital"){
+      return InkWell(
+        onTap: () {
+          setState(() {
+            if (_pageState != 0) {
+              _pageState = 0;
+            } else {
+              _pageState = 1;
+              //indx = item['id'];
+
+            }
+          });
+        },
+        child: Card(
+          elevation: 1.5,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ListTile(
+              title: Row(
+                children: <Widget>[
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/images/hospital.png"),),),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width - 140,
+                          child: Text(
+                            Name,
+                            style: TextStyle(fontSize: 17),
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        type,
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }else if(type == "Clinic" || type == "Pathology"){
+      return InkWell(
+        onTap: () {
+          setState(() {
+            if (_pageState != 0) {
+              _pageState = 0;
+            } else {
+              _pageState = 1;
+              //indx = item['id'];
+
+            }
+          });
+        },
+        child: Card(
+          elevation: 1.5,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ListTile(
+              title: Row(
+                children: <Widget>[
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/images/pharmacy.png"),),),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width - 140,
+                          child: Text(
+                            Name,
+                            style: TextStyle(fontSize: 17),
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        type,
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
   }
 }
 

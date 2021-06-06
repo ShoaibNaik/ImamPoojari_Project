@@ -1,11 +1,13 @@
 import 'package:final_major_project/centers.dart';
+import 'package:final_major_project/clinic.dart';
+import 'package:final_major_project/diagnostic.dart';
 import 'package:final_major_project/feedback.dart';
+import 'package:final_major_project/medical.dart';
 import 'package:final_major_project/settings.dart';
 import 'package:final_major_project/visit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-
 
 class navBar extends StatefulWidget {
   @override
@@ -16,9 +18,9 @@ class _navBarState extends State<navBar> {
 
   List<Widget> _widgetOptions = <Widget> [
     centersList(),
-    VisitorsList(),
-    FeedBack(),
-    SettingList(),
+    medicalList(),
+    diagList(),
+    clinicList(),
   ];
 
   int _selectedItemPosition = 0;
@@ -32,7 +34,6 @@ class _navBarState extends State<navBar> {
   bool showUnselectedLabels = true;
 
   Color selectedColor = Color(0xFF35BB9B);
-
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +70,13 @@ class _navBarState extends State<navBar> {
         onTap: (index) => setState(() => _selectedItemPosition = index),
         items: [
           const BottomNavigationBarItem(
-              icon: Icon(Icons.night_shelter_outlined), label: 'Centers'),
+              icon: Icon(Icons.local_hospital_rounded), label: 'Hospital'),
           const BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark_outlined), label: 'Visiting'),
+              icon: Icon(Icons.medical_services_rounded), label: 'Medical'),
           const BottomNavigationBarItem(
-              icon: Icon(Icons.feedback), label: 'Feedback'),
+              icon: Icon(Icons.healing_outlined), label: 'Diagnostic'),
           const BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
+              icon: Icon(Icons.night_shelter_rounded), label: 'Clinic'),
         ],
         selectedLabelStyle: const TextStyle(fontSize: 15),
         unselectedLabelStyle: const TextStyle(fontSize: 14),

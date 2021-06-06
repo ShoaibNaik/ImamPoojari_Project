@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
-class centersList extends StatefulWidget {
+class diagList extends StatefulWidget {
   @override
-  _centersListState createState() => _centersListState();
+  _diagListState createState() => _diagListState();
 }
 
-class _centersListState extends State<centersList> {
+class _diagListState extends State<diagList> {
 
 
   List users = [];
@@ -30,7 +30,7 @@ class _centersListState extends State<centersList> {
     setState(() {
       isLoading = true;
     });
-    var url = "http://www.imampoojari.educationhost.cloud/hospital.php/";
+    var url = "http://www.imampoojari.educationhost.cloud/diagnostic.php/";
     var response = await http.get(Uri.parse(url));
     // print(response.body);
     if (response.statusCode == 200) {
@@ -61,7 +61,7 @@ class _centersListState extends State<centersList> {
       backgroundColor: Color(0xFFE5E8EC),
       appBar: AppBar(
         backgroundColor: Color(0xFF35BB9B),
-        title: Text("Hospital"),
+        title: Text("Diagnostics"),
         centerTitle: true,
       ),
       body: Stack(

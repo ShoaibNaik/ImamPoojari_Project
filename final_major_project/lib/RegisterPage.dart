@@ -7,7 +7,8 @@ import 'dart:convert';
 
 
 class Register extends StatefulWidget {
-  const Register({Key key}) : super(key: key);
+  final user;
+  const Register({Key key, this.user}) : super(key: key);
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -176,6 +177,7 @@ class _RegisterState extends State<Register> {
                   children: [
                     TextFormField(
                       controller: fName,
+                      initialValue: widget.user.text,
                       decoration: InputDecoration(
                         labelText: 'First Name',
                         border: OutlineInputBorder(),
