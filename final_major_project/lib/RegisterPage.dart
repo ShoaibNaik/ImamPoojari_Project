@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_below/dropdown_below.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:dropdownfield/dropdownfield.dart';
 
 
 class Register extends StatefulWidget {
@@ -65,7 +66,7 @@ class _RegisterState extends State<Register> {
 
   List _postList = [
     {'no': 1, 'keyword': 'Imam'},
-    {'no': 2, 'keyword': 'Maulana'},
+    {'no': 2, 'keyword': 'Mojin'},
     {'no': 3, 'keyword': 'Poojari'},
     {'no': 4, 'keyword': 'Pandit'},
   ];
@@ -214,9 +215,9 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     SizedBox(height: 40),
-                    InkWell(
-                      child: Post(),
-                    ),
+                    // InkWell(
+                    //   child: Post(),
+                    // ),
                     SizedBox(height: 40),
                     InkWell(
                       onTap: (){
@@ -333,6 +334,24 @@ class _RegisterState extends State<Register> {
                             SizedBox(
                               width: 5,
                             ),
+                            Container(
+                              margin: EdgeInsets.only(left: 12.0, right: 14.0),
+                              child: DropDownField(
+                                controller: Post,
+                                hintText: 'Select Option',
+                                hintStyle:
+                                TextStyle(fontFamily: 'Roboto', fontSize: 16.0),
+                                enabled: true,
+                                items: post,
+                                itemsVisibleInDropdown: 2,
+                                onValueChanged: (value) {
+                                  setState() {
+                                    selectPost = value;
+                                    print(selectPost);
+                                  }
+                                },
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -406,22 +425,33 @@ class _RegisterState extends State<Register> {
     });
   }
 
-  Widget Post() {
-    return Container(
-      child: DropdownBelow(
-        itemWidth: 350,
-        itemTextstyle: TextStyle(
-            fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
-        boxTextstyle: TextStyle(
-            fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
-        boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
-        boxWidth: 400,
-        boxHeight: 60,
-        //  hint: Text('choose item'),
-        value: _selectedPost,
-        items: _dropdownPostItems,
-        onChanged: onChangeDropdownPosts,
-      ),
-    );
-  }
+  // Widget Post() {
+  //   return Container(
+  //     child: DropdownBelow(
+  //       itemWidth: 350,
+  //       itemTextstyle: TextStyle(
+  //           fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+  //       boxTextstyle: TextStyle(
+  //           fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+  //       boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
+  //       boxWidth: 400,
+  //       boxHeight: 60,
+  //       //  hint: Text('choose item'),
+  //       value: _selectedPost,
+  //       items: _dropdownPostItems,
+  //       onChanged: onChangeDropdownPosts,
+  //     ),
+  //   );
+  // }
+
+  String selectPost = "";
+
+  final Post = TextEditingController();
+
+  List<String> post = [
+    'Imam',
+    'Mojin',
+    'Poojari'
+  ];
+
 }
