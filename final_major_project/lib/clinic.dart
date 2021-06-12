@@ -139,38 +139,3 @@ class _clinicListState extends State<clinicList> {
   }
 }
 
-// ListView.builder(
-// itemCount: CentersList.length,
-// itemBuilder: (context, index) {
-// Centers centers = CentersList[index];
-// return Card(
-// shape: RoundedRectangleBorder(
-// borderRadius: BorderRadius.circular(10.0)),
-// child: InkWell(
-// onTap: () {
-// setState(() {
-// if (_pageState != 0) {
-// _pageState = 0;
-// } else {
-// _pageState = 1;
-// }
-// });
-// },
-// child: Column(
-// children: [
-// SizedBox(height: 40),
-// Row(
-// mainAxisAlignment: MainAxisAlignment.start,
-// children: [
-// SizedBox(width: 10),
-// Text(centers.image),
-// SizedBox(width: 15),
-// Text(centers.name)
-// ],
-// ),
-// SizedBox(height: 40),
-// ],
-// ),
-// ),
-// );
-// })

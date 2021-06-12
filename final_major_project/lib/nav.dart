@@ -1,12 +1,8 @@
 import 'package:final_major_project/centers.dart';
 import 'package:final_major_project/clinic.dart';
 import 'package:final_major_project/diagnostic.dart';
-import 'package:final_major_project/feedback.dart';
 import 'package:final_major_project/medical.dart';
-import 'package:final_major_project/settings.dart';
-import 'package:final_major_project/visit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 
 class navBar extends StatefulWidget {

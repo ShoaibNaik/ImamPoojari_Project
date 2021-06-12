@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:final_major_project/LangDropDown.dart';
 import 'package:final_major_project/RegisterPage.dart';
+import 'package:final_major_project/UserRegister.dart';
 import 'package:final_major_project/nav.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class _LoginState extends State<Login> {
     if(data == "user done"){
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => navBar()));
     }else if(data == "user error"){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Register()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserRegister()));
     }
   }
 
