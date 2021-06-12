@@ -2,6 +2,10 @@ import 'package:final_major_project/LoginPage.dart';
 import 'package:final_major_project/RegisterPage.dart';
 import 'package:final_major_project/UserRegister.dart';
 import 'package:final_major_project/centers.dart';
+import 'package:final_major_project/clinicPage.dart';
+import 'package:final_major_project/diagnosticPage.dart';
+import 'package:final_major_project/hospitalPage.dart';
+import 'package:final_major_project/medicalPage.dart';
 import 'package:final_major_project/nav.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: "Roboto"
       ),
-      home: navBar(),
+      home: Login(),
     );
   }
 }

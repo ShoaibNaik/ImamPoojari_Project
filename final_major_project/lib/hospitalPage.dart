@@ -1,15 +1,14 @@
-import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class UserRegister extends StatefulWidget {
-  const UserRegister({Key key}) : super(key: key);
+class hospitalPage extends StatefulWidget {
+  const hospitalPage({key}) : super(key: key);
 
   @override
-  _UserRegisterState createState() => _UserRegisterState();
+  _hospitalPageState createState() => _hospitalPageState();
 }
 
-class _UserRegisterState extends State<UserRegister> {
+class _hospitalPageState extends State<hospitalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +22,7 @@ class _UserRegisterState extends State<UserRegister> {
                 margin: const EdgeInsets.only(top: 100,bottom: 70),
                 child: Center(
                   child: Text(
-                    "Register",
+                    "Hospital",
                     style: TextStyle(
                       fontSize: 40,
                     ),
@@ -33,8 +32,8 @@ class _UserRegisterState extends State<UserRegister> {
               Container(
                 padding: EdgeInsets.all(32),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(35))
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(35))
                 ),
                 child: Column(
                   children: [
@@ -42,7 +41,7 @@ class _UserRegisterState extends State<UserRegister> {
                     TextFormField(
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        labelText: 'First Name',
+                        labelText: 'Hospital Name',
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -50,53 +49,33 @@ class _UserRegisterState extends State<UserRegister> {
                     TextFormField(
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        labelText: 'Last Name',
+                        labelText: 'Doctor Name',
                         border: OutlineInputBorder(),
                       ),
                     ),
                     SizedBox(height: 40),
                     TextFormField(
-                      keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        labelText: 'Email Address',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 40),
-                    Container(
-                      margin: EdgeInsets.only(left: 12.0, right: 14.0),
-                      child: DropDownField(
-                        controller: Gender,
-                        hintText: 'Select Option',
-                        hintStyle:
-                        TextStyle(fontSize: 16.0),
-                        enabled: true,
-                        items: area,
-                        itemsVisibleInDropdown: 2,
-                        onValueChanged: (value) {
-                          setState() {
-                            selectArea = value;
-                            print(selectArea);
-                          }
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 40),
-                    TextFormField(
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        labelText: 'Masjid Name',
+                        labelText: 'Contact Person Name',
                         border: OutlineInputBorder(),
                       ),
                     ),
                     SizedBox(height: 40),
                     TextFormField(
-                      maxLines: 3,
-                      keyboardType: TextInputType.text,
+                      maxLength: 10,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        labelText: 'Masjid Address',
+                        labelText: 'Contact No',
                         border: OutlineInputBorder(),
                       ),
+                    ),
+                    SizedBox(height: 40),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Address',
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 4,
                     ),
                     SizedBox(height: 40),
                     Container(
@@ -110,7 +89,7 @@ class _UserRegisterState extends State<UserRegister> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Register',
+                            'Submit',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -131,19 +110,4 @@ class _UserRegisterState extends State<UserRegister> {
       ),
     );
   }
-  String selectArea = "";
-
-  final Gender = TextEditingController();
-
-  List<String> area = [
-    'Reti Bandar',
-    'Alishan',
-    'Sanjay Nagar',
-    'Amrut Nagar',
-    'Tanwar Nagar',
-    'Shimla Park',
-    'Shibli Nagar',
-    'Shilphata',
-    'Kalyanphata',
-  ];
 }
