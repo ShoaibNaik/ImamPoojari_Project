@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 
 class diagnosticPage extends StatefulWidget {
   const diagnosticPage({key}) : super(key: key);
@@ -63,6 +64,25 @@ class _diagnosticPageState extends State<diagnosticPage> {
                       ),
                     ),
                     SizedBox(height: 40),
+                    Container(
+                      margin: EdgeInsets.only(left: 12.0, right: 14.0),
+                      child: DropDownField(
+                        controller: Gender,
+                        hintText: 'Select Option',
+                        hintStyle:
+                        TextStyle(fontSize: 16.0),
+                        enabled: true,
+                        items: area,
+                        itemsVisibleInDropdown: 2,
+                        onValueChanged: (value) {
+                          setState() {
+                            selectArea = value;
+                            print(selectArea);
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 40),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Address',
@@ -103,4 +123,22 @@ class _diagnosticPageState extends State<diagnosticPage> {
       ),
     );
   }
+
+  String selectArea = "";
+
+  final Gender = TextEditingController();
+
+  List<String> area = [
+    'Reti Bandar',
+    'Alishan',
+    'Sanjay Nagar',
+    'Amrut Nagar',
+    'Tanwar Nagar',
+    'Shimla Park',
+    'Shibli Nagar',
+    'Shilphata',
+    'Kalyanphata',
+  ];
+
+
 }
