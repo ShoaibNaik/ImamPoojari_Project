@@ -33,6 +33,10 @@ dependencies:
   flutter_snake_navigationbar: ^0.5.0
   http: ^0.13.3
   dropdownfield: ^1.0.3
+  hive: ^2.0.4
+  hive_flutter: ^1.0.0
+  path_provider: ^2.0.2
+
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,5 @@
+import 'package:final_major_project/LoginPage.dart';
+import 'package:final_major_project/subListPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -27,52 +29,62 @@ class _BeforeLoginState extends State<BeforeLogin> {
 
                   Column(
                     children: [
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        height: 70,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: Color(0xFF35BB9B),
-                        ),
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Benificiary',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 26,
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          height: 70,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Color(0xFF35BB9B),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Benificiary',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 26,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                          ],
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        height: 70,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: Color(0xFF35BB9B),
-                        ),
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Service Provider',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 26,
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => subList()));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          height: 70,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Color(0xFF35BB9B),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Service Provider',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 26,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                          ],
+                              SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

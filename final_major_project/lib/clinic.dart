@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:final_major_project/BeforeLogin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
 class clinicList extends StatefulWidget {
@@ -12,7 +14,7 @@ class clinicList extends StatefulWidget {
 
 class _clinicListState extends State<clinicList> {
 
-
+  Box userDetails;
   List users = [];
   bool isLoading = false;
 
@@ -25,13 +27,28 @@ class _clinicListState extends State<clinicList> {
   var ad;
   var t;
   var n;
+  var fn;
+  var ln;
+  var m;
+
+  final snackBar = SnackBar(
+    content: Text('Team Ummeed will connect you shortly'),
+  );
+
+  final snackBar1 = SnackBar(
+    content: Text('Yay! A SnackBar!'),
+  );
+
 
   fetchUser() async {
     setState(() {
       isLoading = true;
     });
     var url = "http://www.imampoojari.educationhost.cloud/clinic.php/";
-    var response = await http.get(Uri.parse(url));
+    var response = await http.post(Uri.parse(url),
+    body: {
+      "area" : ar,
+    });
     // print(response.body);
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
@@ -45,11 +62,36 @@ class _clinicListState extends State<clinicList> {
     }
   }
 
+  Future reg() async{
+    var url = "http://www.imampoojari.educationhost.cloud/userRequest.php/";
+    var response = await http.post(Uri.parse(url),
+    body: {
+      "firstName" : fn,
+      "lastName" : ln,
+      "mobileNo" : m,
+      "type" : t,
+      "center_name" : n,
+      "address" : ad,
+      "area" : ar,
+    });
+
+    if(response.statusCode == 200){
+      return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }else{
+      return ScaffoldMessenger.of(context).showSnackBar(snackBar1);
+    }
+  }
+
 
 
   void initState() {
     // TODO: implement initState
     super.initState();
+    userDetails = Hive.box("loginData");
+    ar = userDetails.get('area');
+    fn = userDetails.get('first_name');
+    ln = userDetails.get('last_name');
+    m = userDetails.get('mobile');
     this.fetchUser();
   }
 
@@ -62,6 +104,20 @@ class _clinicListState extends State<clinicList> {
       appBar: AppBar(
         backgroundColor: Color(0xFF35BB9B),
         title: Text("Clinic"),
+        actions: [
+          InkWell(
+            onTap: (){
+              userDetails.delete('first_name');
+              userDetails.delete('lastName');
+              userDetails.delete('email');
+              userDetails.delete('mobile');
+              userDetails.delete('area');
+              setState(() {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => BeforeLogin()));
+              });
+            },
+              child: Icon(Icons.logout))
+        ],
         centerTitle: true,
       ),
       body: Stack(
@@ -126,6 +182,17 @@ class _clinicListState extends State<clinicList> {
               ElevatedButton(
                 onPressed: () {
                   // Respond to button press
+                  indx = item['id'];
+                  n = Name;
+                  t = type;
+                  ad = address;
+                  print(indx);
+                  print(n);
+                  print(t);
+                  print(ad);
+                  setState(() {
+                    reg();
+                  });
                 },
                 child: Text('Submit',style: TextStyle(fontSize: 16),),
               )

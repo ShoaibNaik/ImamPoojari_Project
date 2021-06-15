@@ -7,6 +7,8 @@ import 'package:final_major_project/nav.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 
 
@@ -26,43 +28,80 @@ class _LoginState extends State<Login> {
   double windowWidth = 0;
   double windowHeight = 0;
 
+
+  Box userDetails;
   TextEditingController user = TextEditingController();
   TextEditingController otp = TextEditingController();
 
   var data;
   var need;
+  var ar;
 
   Future login() async{
-    var url = "http://imampoojari.educationhost.cloud/login.php";
+    var url = "http://imampoojari.educationhost.cloud/sendOTP.php";
     var response = await http.post(Uri.parse(url),
         body:{
         "userId" : user.text,
         });
+    print(response.body);
 
     data = jsonDecode(response.body);
 
-    if(data == "done"){
-      print("Logged In");
-    }else if(data == "error"){
-      print("error");
+
+
+  }
+
+  List users = [];
+  bool isLoading = false;
+  
+  Future loginData() async{
+    var url = "http://imampoojari.educationhost.cloud/loginDetails.php";
+    var response = await http.post(Uri.parse(url),
+    body: {
+      "userId" : user.text,
+    });
+
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      setState(() {
+        users = items;
+        isLoading = false;
+        
+        userDetails.put('first_name', users[0]['firstName']);
+        userDetails.put('last_name', users[0]['lastName']);
+        userDetails.put('email', users[0]['email']);
+        userDetails.put('mobile', users[0]['mobileNo']);
+        userDetails.put('area', users[0]['area']);
+      });
+    } else {
+      users = [];
+      isLoading = false;
     }
   }
 
   Future OTP() async{
-    var url = "http://imampoojari.educationhost.cloud/otp.php";
+    var url = "http://imampoojari.educationhost.cloud/login.php";
     var response = await http.post(Uri.parse(url),
         body:{
           "userId" : user.text,
           "otp" : otp.text,
         });
+    print(response.body);
 
     data = jsonDecode(response.body);
 
     if(data == "user done"){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => navBar()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => navBar()));
     }else if(data == "user error"){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserRegister()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserRegister(userId: user.text,)));
     }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userDetails = Hive.box("loginData");
+    ar = userDetails.get('email');
   }
 
   @override
@@ -122,10 +161,14 @@ class _LoginState extends State<Login> {
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          if (_pageState != 0) {
-                            _pageState = 0;
-                          } else {
-                            _pageState = 1;
+                          if(ar != ''){
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => navBar()));
+                          }else{
+                            if (_pageState != 0) {
+                              _pageState = 0;
+                            } else {
+                              _pageState = 1;
+                            }
                           }
                         });
                       },
@@ -271,6 +314,7 @@ class _LoginState extends State<Login> {
                       onTap: (){
                         setState(() {
                           OTP();
+                          loginData();
                         });
                       },
                       child: Container(

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdownfield/dropdownfield.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class hospitalPage extends StatefulWidget {
   const hospitalPage({key}) : super(key: key);
@@ -10,7 +13,42 @@ class hospitalPage extends StatefulWidget {
 }
 
 class _hospitalPageState extends State<hospitalPage> {
+
+  TextEditingController name = TextEditingController();
+  TextEditingController cName = TextEditingController();
+  TextEditingController cNo = TextEditingController();
+  TextEditingController address = TextEditingController();
+
+  final snackBar = SnackBar(
+    content: Text('Thanks for your contribution! Team Ummeed will connect you shortly'),
+  );
+
+  final snackBar1 = SnackBar(
+    content: Text('Yay! A SnackBar!'),
+  );
+
   @override
+
+  Future Reg() async{
+    var url = "http://www.imampoojari.educationhost.cloud/pro_req.php";
+    var response = await http.post(Uri.parse(url),body: {
+      "type" : 'Hospital',
+      "centerName" : name.text,
+      "name" : cName.text,
+      "contactNo" : cNo.text,
+      "area" : Area.text,
+      "address" : address.text,
+    });
+
+    var data = jsonDecode(response.body);
+
+    if(data == 'success'){
+      return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }else{
+      return ScaffoldMessenger.of(context).showSnackBar(snackBar1);
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE5E8EC),
@@ -40,22 +78,16 @@ class _hospitalPageState extends State<hospitalPage> {
                   children: [
                     SizedBox(height: 40),
                     TextFormField(
+                      controller: name,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        labelText: 'Hospital Name',
+                        labelText: 'Hospital/Doctor Name',
                         border: OutlineInputBorder(),
                       ),
                     ),
                     SizedBox(height: 40),
                     TextFormField(
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        labelText: 'Doctor Name',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 40),
-                    TextFormField(
+                      controller: cName,
                       decoration: InputDecoration(
                         labelText: 'Contact Person Name',
                         border: OutlineInputBorder(),
@@ -63,6 +95,7 @@ class _hospitalPageState extends State<hospitalPage> {
                     ),
                     SizedBox(height: 40),
                     TextFormField(
+                      controller: cNo,
                       maxLength: 10,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
@@ -74,7 +107,7 @@ class _hospitalPageState extends State<hospitalPage> {
                     Container(
                       margin: EdgeInsets.only(left: 12.0, right: 14.0),
                       child: DropDownField(
-                        controller: Gender,
+                        controller: Area,
                         hintText: 'Select Option',
                         hintStyle:
                         TextStyle(fontSize: 16.0),
@@ -91,6 +124,7 @@ class _hospitalPageState extends State<hospitalPage> {
                     ),
                     SizedBox(height: 40),
                     TextFormField(
+                      controller: address,
                       decoration: InputDecoration(
                         labelText: 'Address',
                         border: OutlineInputBorder(),
@@ -133,7 +167,7 @@ class _hospitalPageState extends State<hospitalPage> {
 
   String selectArea = "";
 
-  final Gender = TextEditingController();
+  final Area = TextEditingController();
 
   List<String> area = [
     'Reti Bandar',
