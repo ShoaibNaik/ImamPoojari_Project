@@ -183,9 +183,9 @@ class _clinicListState extends State<clinicList> {
                 onPressed: () {
                   // Respond to button press
                   indx = item['id'];
-                  n = Name;
-                  t = type;
-                  ad = address;
+                  n = item['name'];
+                  t = item['type'];
+                  ad = item['address'];
                   print(indx);
                   print(n);
                   print(t);

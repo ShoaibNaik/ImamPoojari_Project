@@ -187,9 +187,9 @@ class _medicalListState extends State<medicalList> {
                 onPressed: () {
                   // Respond to button press
                   indx = item['id'];
-                  n = Name;
-                  t = type;
-                  ad = address;
+                  n = item['name'];
+                  t = item['type'];
+                  ad = item['address'];
                   print(indx);
                   print(n);
                   print(t);
