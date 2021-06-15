@@ -161,7 +161,7 @@ class _LoginState extends State<Login> {
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          if(ar != ''){
+                          if(ar != null){
                             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => navBar()));
                           }else{
                             if (_pageState != 0) {
