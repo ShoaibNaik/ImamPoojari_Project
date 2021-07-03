@@ -43,6 +43,11 @@ class _medicalPageState extends State<medicalPage> {
     var data = jsonDecode(response.body);
 
     if(data == 'success'){
+      cName.clear();
+      cNo.clear();
+      Area.clear();
+      name.clear();
+      address.clear();
       return ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }else{
       return ScaffoldMessenger.of(context).showSnackBar(snackBar1);
