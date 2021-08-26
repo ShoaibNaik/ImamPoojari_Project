@@ -65,7 +65,7 @@ class _diagnosticPageState extends State<diagnosticPage> {
                 margin: const EdgeInsets.only(top: 100,bottom: 105),
                 child: Center(
                   child: Text(
-                    "Diagnostics",
+                    "Diagnostic",
                     style: TextStyle(
                       fontSize: 40,
                     ),
@@ -85,7 +85,7 @@ class _diagnosticPageState extends State<diagnosticPage> {
                       controller: name,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        labelText: 'Center Name',
+                        labelText: 'Diagnostic Center Name',
                         border: OutlineInputBorder(),
                       ),
                     ),
